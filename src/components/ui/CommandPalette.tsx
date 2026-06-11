@@ -116,7 +116,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                       onClick={() => run(cmd)}
                       className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors text-left group"
                     >
-                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-[#FF6A00] group-hover:bg-[#FF6A00]/10 transition-colors flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-[#A8FF3E] group-hover:bg-[#A8FF3E]/10 transition-colors flex-shrink-0">
                         {cmd.icon}
                       </div>
                       <div>

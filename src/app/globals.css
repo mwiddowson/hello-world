@@ -3,26 +3,28 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-poppins);
   --font-mono: var(--font-geist-mono);
 
-  --color-orange: #FF6A00;
-  --color-charcoal: #0F1115;
-  --color-flare-white: #F5F7FA;
-  --color-slate: #1E2128;
-  --color-slate-light: #2A2F3A;
+  --color-lime: #A8FF3E;
+  --color-teal: #00C4B3;
+  --color-charcoal: #121824;
+  --color-off-white: #F9F9F9;
+  --color-slate: #1C2333;
+  --color-slate-light: #252E3F;
   --color-muted: #6B7280;
 }
 
 :root {
-  --background: #0F1115;
-  --foreground: #F5F7FA;
+  --background: #121824;
+  --foreground: #F9F9F9;
   color-scheme: dark;
 }
 
 .light {
-  --background: #F5F7FA;
-  --foreground: #0F1115;
+  --background: #F9F9F9;
+  --foreground: #121824;
   color-scheme: light;
 }
 
@@ -40,14 +42,14 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 106, 0, 0.3);
-  color: #F5F7FA;
+  background: rgba(168, 255, 62, 0.25);
+  color: #F9F9F9;
 }
 
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #0F1115; }
-::-webkit-scrollbar-thumb { background: #2A2F3A; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #FF6A00; }
+::-webkit-scrollbar-track { background: #121824; }
+::-webkit-scrollbar-thumb { background: #252E3F; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #A8FF3E; }
 
 @keyframes shimmer {
   0% { background-position: -200% center; }
@@ -60,26 +62,21 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(255, 106, 0, 0); }
-}
-
-@keyframes orbit {
-  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(168, 255, 62, 0.35); }
+  50% { box-shadow: 0 0 0 8px rgba(168, 255, 62, 0); }
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #FF6A00 0%, #FF9A5C 50%, #FF6A00 100%);
+  background: linear-gradient(135deg, #A8FF3E 0%, #00C4B3 60%, #A8FF3E 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 3s linear infinite;
+  animation: shimmer 4s linear infinite;
 }
 
 .glass {
-  background: rgba(30, 33, 40, 0.7);
+  background: rgba(28, 35, 51, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -96,8 +93,8 @@ body {
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 106, 0, 0.15);
-  border-color: rgba(255, 106, 0, 0.25) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(168, 255, 62, 0.18);
+  border-color: rgba(168, 255, 62, 0.2) !important;
 }
 
 .node-pulse {
@@ -110,8 +107,8 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -119,4 +116,8 @@ body {
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-poppins), system-ui, sans-serif;
 }

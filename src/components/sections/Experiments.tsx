@@ -88,7 +88,7 @@ export function Experiments() {
         >
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
                 Experiments
               </span>
               <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
@@ -100,7 +100,7 @@ export function Experiments() {
               </p>
             </div>
             <div className="flex items-center gap-2 glass rounded-lg px-4 py-2">
-              <FlaskConical className="w-4 h-4 text-[#FF6A00]" />
+              <FlaskConical className="w-4 h-4 text-[#A8FF3E]" />
               <span className="text-sm font-medium text-[var(--foreground)]/60">
                 {experiments.filter((e) => e.status === "Active").length} Active
               </span>

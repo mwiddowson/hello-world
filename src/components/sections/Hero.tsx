@@ -15,7 +15,7 @@ function ParticleCanvas() {
 
     let animId: number;
     const particles: { x: number; y: number; vx: number; vy: number; r: number; alpha: number }[] = [];
-    const COUNT = 60;
+    const COUNT = 55;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -28,10 +28,10 @@ function ParticleCanvas() {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
         r: Math.random() * 2 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1,
+        alpha: Math.random() * 0.35 + 0.08,
       });
     }
 
@@ -52,11 +52,11 @@ function ParticleCanvas() {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          if (dist < 130) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(255, 106, 0, ${0.12 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(168, 255, 62, ${0.1 * (1 - dist / 130)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -66,7 +66,7 @@ function ParticleCanvas() {
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 106, 0, ${p.alpha})`;
+        ctx.fillStyle = `rgba(168, 255, 62, ${p.alpha})`;
         ctx.fill();
       }
 
@@ -104,8 +104,8 @@ export function Hero() {
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
         <div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(255,106,0,0.08) 0%, transparent 70%)" }}
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full"
+          style={{ background: "radial-gradient(ellipse, rgba(168,255,62,0.06) 0%, transparent 70%)" }}
         />
       </div>
 
@@ -117,9 +117,9 @@ export function Hero() {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF6A00] node-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#A8FF3E] node-pulse" />
           <span className="text-xs text-[var(--foreground)]/60 font-medium">
-            AI-Powered Automation & Growth Platform
+            Unlocking confidence and possibility through technology
           </span>
         </motion.div>
 
@@ -128,12 +128,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
+          className="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.0] mb-6"
+          style={{ fontFamily: "var(--font-poppins)" }}
         >
-          Build Faster.{" "}
-          <span className="gradient-text">Think Clearer.</span>
+          Do more than
           <br />
-          Automate Everything.
+          <span className="gradient-text">you think.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -143,8 +143,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl text-[var(--foreground)]/50 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Flare creates AI-powered systems, tools and automations that help creators and
-          businesses reclaim time, scale intelligently and focus on what matters.
+          Flare Digital creates AI-powered systems, tools and automations that give
+          creators and businesses the joy of realising just how much they&apos;re capable of.
         </motion.p>
 
         {/* CTAs */}
@@ -156,25 +156,26 @@ export function Hero() {
         >
           <button
             onClick={() => scrollTo("ecosystem")}
-            className="group flex items-center gap-2 px-6 py-3 bg-[#FF6A00] text-white rounded-lg font-medium text-sm hover:bg-[#e55f00] transition-colors shadow-lg shadow-orange-500/20"
+            className="group flex items-center gap-2 px-7 py-3.5 bg-[#A8FF3E] text-[#121824] rounded-lg font-semibold text-sm hover:bg-[#bfff5c] transition-colors shadow-lg shadow-lime-400/15"
+            style={{ fontFamily: "var(--font-poppins)" }}
           >
-            Explore the Ecosystem
+            Discover what&apos;s possible
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={() => scrollTo("products")}
-            className="flex items-center gap-2 px-6 py-3 glass text-[var(--foreground)]/80 rounded-lg font-medium text-sm hover:text-[var(--foreground)] transition-colors"
+            className="flex items-center gap-2 px-7 py-3.5 glass text-[var(--foreground)]/70 rounded-lg font-medium text-sm hover:text-[var(--foreground)] transition-colors"
           >
-            See What We&apos;re Building
+            See what we&apos;re building
           </button>
         </motion.div>
 
-        {/* Metric chips */}
+        {/* Metrics */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-16"
+          className="flex flex-wrap items-center justify-center gap-8 mt-20"
         >
           {[
             { label: "Workflows Built", value: "120+" },
@@ -183,8 +184,8 @@ export function Hero() {
             { label: "Hours Automated", value: "10k+" },
           ].map((m) => (
             <div key={m.label} className="text-center">
-              <div className="text-2xl font-bold text-[var(--foreground)]">{m.value}</div>
-              <div className="text-xs text-[var(--foreground)]/40 mt-0.5">{m.label}</div>
+              <div className="text-2xl font-bold" style={{ fontFamily: "var(--font-poppins)" }}>{m.value}</div>
+              <div className="text-xs text-[var(--foreground)]/35 mt-0.5">{m.label}</div>
             </div>
           ))}
         </motion.div>
@@ -196,7 +197,7 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         onClick={() => scrollTo("ecosystem")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[var(--foreground)]/30 hover:text-[var(--foreground)]/60 transition-colors floating"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-[var(--foreground)]/25 hover:text-[var(--foreground)]/50 transition-colors floating"
       >
         <ChevronDown className="w-6 h-6" />
       </motion.button>

@@ -52,11 +52,11 @@ export function Navigation() {
             onClick={() => handleNav("#home")}
             className="flex items-center gap-2 group"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#FF6A00] flex items-center justify-center node-pulse">
-              <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
+            <div className="w-8 h-8 rounded-lg bg-[#A8FF3E] flex items-center justify-center node-pulse">
+              <Zap className="w-4 h-4 text-[#121824]" strokeWidth={2.5} />
             </div>
-            <span className="font-bold text-lg tracking-tight text-[var(--foreground)]">
-              Flare
+            <span className="font-bold text-lg tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-poppins)" }}>
+              Flare Digital
             </span>
           </button>
 

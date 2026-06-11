@@ -21,7 +21,7 @@ const items = [
       "A modular framework for building and deploying AI-powered automations across business workflows — from data collection to decision-making.",
     icon: Workflow,
     progress: 40,
-    color: "#FF6A00",
+    color: "#A8FF3E",
   },
   {
     number: "03",
@@ -74,7 +74,7 @@ export function Timeline() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
             What We&apos;re Building
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">

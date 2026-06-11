@@ -14,7 +14,7 @@ const posts = [
       "From manual keyword hunting to a fully automated research pipeline — the tools, prompts, and lessons learned.",
     date: "June 2025",
     readTime: "8 min read",
-    color: "#FF6A00",
+    color: "#A8FF3E",
   },
   {
     category: "AI",
@@ -64,7 +64,7 @@ const posts = [
 ];
 
 const catColors: Record<string, string> = {
-  Automation: "#FF6A00",
+  Automation: "#A8FF3E",
   AI: "#818CF8",
   "Building in Public": "#34D399",
   Productivity: "#FBBF24",
@@ -85,7 +85,7 @@ export function Journal() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
             Journal
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
@@ -121,8 +121,8 @@ export function Journal() {
                 <span
                   className="text-[10px] font-semibold px-2 py-1 rounded-full"
                   style={{
-                    background: `${catColors[post.category] || "#FF6A00"}15`,
-                    color: catColors[post.category] || "#FF6A00",
+                    background: `${catColors[post.category] || "#A8FF3E"}15`,
+                    color: catColors[post.category] || "#A8FF3E",
                   }}
                 >
                   {post.category}
@@ -133,7 +133,7 @@ export function Journal() {
                 </div>
               </div>
 
-              <h3 className="font-bold text-base text-[var(--foreground)] leading-snug mb-3 group-hover:text-[#FF6A00] transition-colors">
+              <h3 className="font-bold text-base text-[var(--foreground)] leading-snug mb-3 group-hover:text-[#A8FF3E] transition-colors">
                 {post.title}
               </h3>
               <p className="text-sm text-[var(--foreground)]/50 leading-relaxed flex-1">
@@ -142,7 +142,7 @@ export function Journal() {
 
               <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
                 <span className="text-xs text-[var(--foreground)]/30">{post.date}</span>
-                <ArrowRight className="w-4 h-4 text-[var(--foreground)]/20 group-hover:text-[#FF6A00] group-hover:translate-x-0.5 transition-all" />
+                <ArrowRight className="w-4 h-4 text-[var(--foreground)]/20 group-hover:text-[#A8FF3E] group-hover:translate-x-0.5 transition-all" />
               </div>
             </motion.article>
           ))}

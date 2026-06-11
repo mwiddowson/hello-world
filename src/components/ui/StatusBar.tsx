@@ -19,7 +19,7 @@ export function StatusBar() {
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 glass rounded-full px-4 py-2 flex items-center gap-3 shadow-lg shadow-black/30"
     >
       <div className="flex items-center gap-1.5">
-        <span className="w-2 h-2 rounded-full bg-[#FF6A00] node-pulse" />
+        <span className="w-2 h-2 rounded-full bg-[#A8FF3E] node-pulse" />
         <span className="text-xs text-[var(--foreground)]/50 font-medium uppercase tracking-widest">
           Currently Building
         </span>
@@ -33,7 +33,7 @@ export function StatusBar() {
         >
           {[...projects, ...projects].map((p, i) => (
             <span key={i} className="text-xs text-[var(--foreground)]/60 flex items-center gap-1.5">
-              <Zap className="w-3 h-3 text-[#FF6A00]" />
+              <Zap className="w-3 h-3 text-[#A8FF3E]" />
               {p}
             </span>
           ))}

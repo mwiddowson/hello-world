@@ -19,14 +19,14 @@ interface Product {
 const statusStyles: Record<Status, string> = {
   Live: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
   Beta: "bg-blue-500/15 text-blue-400 border-blue-500/20",
-  Building: "bg-[#FF6A00]/15 text-[#FF6A00] border-[#FF6A00]/20",
+  Building: "bg-[#A8FF3E]/15 text-[#A8FF3E] border-[#A8FF3E]/20",
   Experiment: "bg-purple-500/15 text-purple-400 border-purple-500/20",
 };
 
 const statusDot: Record<Status, string> = {
   Live: "bg-emerald-400",
   Beta: "bg-blue-400",
-  Building: "bg-[#FF6A00]",
+  Building: "bg-[#A8FF3E]",
   Experiment: "bg-purple-400",
 };
 
@@ -38,7 +38,7 @@ const products: Product[] = [
       "Premium digital products, templates, and design assets for creators and entrepreneurs. Available on Etsy.",
     icon: <ShoppingBag className="w-6 h-6" />,
     status: "Live",
-    color: "#FF6A00",
+    color: "#A8FF3E",
   },
   {
     name: "Acronym Lens",
@@ -83,7 +83,7 @@ export function Products() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
             Products
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
@@ -122,7 +122,7 @@ export function Products() {
               <h3 className="font-bold text-base text-[var(--foreground)] mb-1">
                 {product.name}
               </h3>
-              <p className="text-xs text-[#FF6A00] font-medium mb-3">{product.tagline}</p>
+              <p className="text-xs text-[#A8FF3E] font-medium mb-3">{product.tagline}</p>
               <p className="text-sm text-[var(--foreground)]/50 leading-relaxed flex-1">
                 {product.description}
               </p>
@@ -132,7 +132,7 @@ export function Products() {
                   href={product.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-[var(--foreground)]/40 hover:text-[#FF6A00] transition-colors"
+                  className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-[var(--foreground)]/40 hover:text-[#A8FF3E] transition-colors"
                 >
                   View <ExternalLink className="w-3 h-3" />
                 </a>

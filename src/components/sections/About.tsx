@@ -36,7 +36,7 @@ export function About() {
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96"
-          style={{ background: "radial-gradient(circle, rgba(255,106,0,0.04) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(168,255,62,0.04) 0%, transparent 70%)" }}
         />
       </div>
 
@@ -48,41 +48,40 @@ export function About() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
               About
             </span>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-6">
-              A long-term experiment.
+              You&apos;ve got this.
             </h2>
 
             <div className="space-y-5 text-[var(--foreground)]/60 leading-relaxed">
               <p className="text-lg">
-                Flare is{" "}
+                Flare Digital exists for one reason:{" "}
                 <span className="text-[var(--foreground)] font-medium">
-                  a long-term experiment in building intelligent systems that help people do
-                  more meaningful work with less friction.
+                  to give people the joy of realising they can do so much more than they
+                  thought possible.
                 </span>
               </p>
               <p>
-                We started with digital products and simple automations. We&apos;re building toward
-                a full ecosystem of AI agents, knowledge systems, and growth tools — all
-                connected under one platform.
+                Technology should feel like a unlock, not an obstacle. We build AI-powered
+                tools, automations, and systems that put capability back in your hands.
               </p>
               <p>
-                The goal isn&apos;t to build one product and stop. It&apos;s to build a compounding
-                system where every tool, automation, and process makes the whole smarter.
+                We started with digital products and simple workflows. We&apos;re building toward
+                a full ecosystem — knowledge systems, AI agents, growth engines — all designed
+                around one idea: humans set the direction, smart systems do the heavy lifting.
               </p>
               <p>
-                We think the future of work looks like humans setting direction and AI doing
-                the heavy lifting. We&apos;re building the infrastructure for that future now.
+                Inviting, not complicated. Human first. Tech second.
               </p>
             </div>
 
-            <div className="mt-8 glass rounded-xl p-5 border-l-2 border-[#FF6A00]">
+            <div className="mt-8 glass rounded-xl p-5 border-l-2 border-[#A8FF3E]">
               <p className="text-[var(--foreground)]/80 italic text-sm leading-relaxed">
-                &ldquo;The goal is not to be busy. The goal is to build systems that work
-                while you sleep, think, and create.&rdquo;
+                &ldquo;Discover what&apos;s possible. Then go further.&rdquo;
               </p>
+              <p className="text-xs text-[#A8FF3E] mt-2 font-medium not-italic">— Flare Digital</p>
             </div>
           </motion.div>
 
@@ -97,8 +96,8 @@ export function About() {
                   transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
                   className="glass rounded-2xl p-5 card-hover"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#FF6A00]/10 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-[#FF6A00]" />
+                  <div className="w-10 h-10 rounded-xl bg-[#A8FF3E]/10 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-[#A8FF3E]" />
                   </div>
                   <h3 className="font-bold text-sm text-[var(--foreground)] mb-2">{p.title}</h3>
                   <p className="text-xs text-[var(--foreground)]/50 leading-relaxed">{p.desc}</p>

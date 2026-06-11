@@ -19,7 +19,7 @@ const nodes = [
     label: "Automations",
     desc: "Workflows and intelligent agents",
     icon: Workflow,
-    color: "#FF6A00",
+    color: "#A8FF3E",
     x: 82,
     y: 50,
   },
@@ -71,7 +71,7 @@ export function Ecosystem() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
             The Ecosystem
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
@@ -116,7 +116,7 @@ export function Ecosystem() {
               className="absolute node-pulse"
               style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
             >
-              <div className="w-12 h-12 rounded-full bg-[#FF6A00] flex items-center justify-center shadow-lg shadow-orange-500/30">
+              <div className="w-12 h-12 rounded-full bg-[#A8FF3E] flex items-center justify-center shadow-lg shadow-orange-500/30">
                 <span className="text-white font-bold text-sm">F</span>
               </div>
             </div>

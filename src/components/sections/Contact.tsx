@@ -28,7 +28,7 @@ export function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#FF6A00] mb-3 block">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
             Contact
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
@@ -49,8 +49,8 @@ export function Contact() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="glass rounded-2xl p-6 card-hover group text-center block"
           >
-            <div className="w-12 h-12 rounded-xl bg-[#FF6A00]/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#FF6A00]/20 transition-colors">
-              <Mail className="w-5 h-5 text-[#FF6A00]" />
+            <div className="w-12 h-12 rounded-xl bg-[#A8FF3E]/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#A8FF3E]/20 transition-colors">
+              <Mail className="w-5 h-5 text-[#A8FF3E]" />
             </div>
             <h3 className="font-semibold text-sm text-[var(--foreground)] mb-1">Email</h3>
             <p className="text-xs text-[var(--foreground)]/40">hello@flare.build</p>
@@ -99,10 +99,10 @@ export function Contact() {
           className="glass rounded-2xl p-8 text-center"
         >
           <h3 className="font-bold text-xl text-[var(--foreground)] mb-2">
-            Follow the build.
+            Stay in the spark.
           </h3>
           <p className="text-[var(--foreground)]/50 text-sm mb-6">
-            Get updates on new tools, experiments, and insights. No fluff, no spam.
+            New tools, experiments, and ideas — straight to you. Short, useful, always on point.
           </p>
 
           {submitted ? (
@@ -112,7 +112,7 @@ export function Contact() {
               className="flex items-center justify-center gap-2 text-emerald-400"
             >
               <Check className="w-5 h-5" />
-              <span className="font-medium">You&apos;re in. Welcome to Flare.</span>
+              <span className="font-medium">You&apos;re in. Welcome to Flare Digital.</span>
             </motion.div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -122,11 +122,11 @@ export function Contact() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="flex-1 bg-white/5 border border-white/10 text-[var(--foreground)] text-sm rounded-lg px-4 py-2.5 outline-none focus:border-[#FF6A00]/50 placeholder-[var(--foreground)]/25 transition-colors"
+                className="flex-1 bg-white/5 border border-white/10 text-[var(--foreground)] text-sm rounded-lg px-4 py-2.5 outline-none focus:border-[#A8FF3E]/50 placeholder-[var(--foreground)]/25 transition-colors"
               />
               <button
                 type="submit"
-                className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#FF6A00] text-white text-sm font-medium rounded-lg hover:bg-[#e55f00] transition-colors whitespace-nowrap"
+                className="flex items-center justify-center gap-2 px-5 py-2.5 bg-[#A8FF3E] text-[#121824] text-sm font-semibold rounded-lg hover:bg-[#bfff5c] transition-colors whitespace-nowrap"
               >
                 Subscribe <ArrowRight className="w-4 h-4" />
               </button>

@@ -24,10 +24,10 @@ export function Footer() {
             onClick={() => scrollTo("home")}
             className="flex items-center gap-2"
           >
-            <div className="w-7 h-7 rounded-md bg-[#FF6A00] flex items-center justify-center">
-              <Zap className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+            <div className="w-7 h-7 rounded-md bg-[#A8FF3E] flex items-center justify-center">
+              <Zap className="w-3.5 h-3.5 text-[#121824]" strokeWidth={2.5} />
             </div>
-            <span className="font-bold text-[var(--foreground)]">Flare</span>
+            <span className="font-bold text-[var(--foreground)]" style={{ fontFamily: "var(--font-poppins)" }}>Flare Digital</span>
           </button>
 
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
@@ -43,7 +43,7 @@ export function Footer() {
           </nav>
 
           <p className="text-xs text-[var(--foreground)]/25">
-            © {new Date().getFullYear()} Flare. Building intelligently.
+            © {new Date().getFullYear()} Flare Digital. Do more than you think.
           </p>
         </div>
       </div>
