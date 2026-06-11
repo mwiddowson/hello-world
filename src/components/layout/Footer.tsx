@@ -7,11 +7,8 @@ function scrollTo(id: string) {
 }
 
 const links = [
-  { label: "Ecosystem", href: "ecosystem" },
+  { label: "What we do", href: "what-we-do" },
   { label: "Products", href: "products" },
-  { label: "Experiments", href: "experiments" },
-  { label: "Journal", href: "journal" },
-  { label: "About", href: "about" },
   { label: "Contact", href: "contact" },
 ];
 

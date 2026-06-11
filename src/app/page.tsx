@@ -1,14 +1,10 @@
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { Ecosystem } from "@/components/sections/Ecosystem";
+import { Pillars } from "@/components/sections/Pillars";
 import { Products } from "@/components/sections/Products";
-import { Timeline } from "@/components/sections/Timeline";
-import { Experiments } from "@/components/sections/Experiments";
-import { Journal } from "@/components/sections/Journal";
-import { About } from "@/components/sections/About";
+import { Mission } from "@/components/sections/Mission";
 import { Contact } from "@/components/sections/Contact";
-import { StatusBar } from "@/components/ui/StatusBar";
 import { CommandPaletteProvider } from "@/components/ui/CommandPalette";
 
 export default function Home() {
@@ -18,16 +14,12 @@ export default function Home() {
         <Navigation />
         <main>
           <Hero />
-          <Ecosystem />
+          <Pillars />
           <Products />
-          <Timeline />
-          <Experiments />
-          <Journal />
-          <About />
+          <Mission />
           <Contact />
         </main>
         <Footer />
-        <StatusBar />
       </div>
     </CommandPaletteProvider>
   );

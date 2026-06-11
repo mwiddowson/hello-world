@@ -8,12 +8,8 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 import { useCommandPalette } from "@/components/ui/CommandPalette";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Ecosystem", href: "#ecosystem" },
+  { label: "What we do", href: "#what-we-do" },
   { label: "Products", href: "#products" },
-  { label: "Experiments", href: "#experiments" },
-  { label: "Journal", href: "#journal" },
-  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 

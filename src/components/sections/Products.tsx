@@ -1,146 +1,116 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ShoppingBag, Globe, Workflow, Rocket, ExternalLink } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
-type Status = "Live" | "Beta" | "Building" | "Experiment";
-
-interface Product {
-  name: string;
-  tagline: string;
-  description: string;
-  icon: React.ReactNode;
-  status: Status;
-  color: string;
-  link?: string;
-}
-
-const statusStyles: Record<Status, string> = {
-  Live: "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
-  Beta: "bg-blue-500/15 text-blue-400 border-blue-500/20",
-  Building: "bg-[#A8FF3E]/15 text-[#A8FF3E] border-[#A8FF3E]/20",
-  Experiment: "bg-purple-500/15 text-purple-400 border-purple-500/20",
-};
-
-const statusDot: Record<Status, string> = {
-  Live: "bg-emerald-400",
-  Beta: "bg-blue-400",
-  Building: "bg-[#A8FF3E]",
-  Experiment: "bg-purple-400",
-};
-
-const products: Product[] = [
+const products = [
   {
+    label: "Live now",
+    labelColor: "#A8FF3E",
     name: "Flare Digital Designs",
-    tagline: "Digital downloads and creative assets",
+    tagline: "Digital products that sell while you sleep.",
     description:
-      "Premium digital products, templates, and design assets for creators and entrepreneurs. Available on Etsy.",
-    icon: <ShoppingBag className="w-6 h-6" />,
-    status: "Live",
-    color: "#A8FF3E",
+      "Premium templates, design assets, and digital downloads built for creators. Available on Etsy.",
+    bg: "rgba(168,255,62,0.04)",
+    border: "rgba(168,255,62,0.1)",
+    accent: "#A8FF3E",
   },
   {
+    label: "In development",
+    labelColor: "#00C4B3",
     name: "Acronym Lens",
-    tagline: "Chrome extension with AI context",
+    tagline: "AI context, instantly. No tab-switching.",
     description:
-      "A Chrome extension that explains acronyms and jargon in real-time using AI, giving you instant context without leaving the page.",
-    icon: <Globe className="w-6 h-6" />,
-    status: "Building",
-    color: "#818CF8",
+      "A Chrome extension that explains acronyms and jargon in real time using AI — without ever leaving the page you're on.",
+    bg: "rgba(0,196,179,0.04)",
+    border: "rgba(0,196,179,0.1)",
+    accent: "#00C4B3",
   },
   {
+    label: "Beta",
+    labelColor: "#A8FF3E",
     name: "Automation Lab",
-    tagline: "Workflow templates and productivity systems",
+    tagline: "Your workflows, intelligently automated.",
     description:
-      "A growing library of automation templates, productivity frameworks, and AI-powered workflow systems for individuals and teams.",
-    icon: <Workflow className="w-6 h-6" />,
-    status: "Beta",
-    color: "#34D399",
-  },
-  {
-    name: "Future Projects",
-    tagline: "More coming from the Flare ecosystem",
-    description:
-      "SaaS tools, lifestyle brands, e-commerce ventures, and AI agents. The ecosystem keeps growing.",
-    icon: <Rocket className="w-6 h-6" />,
-    status: "Experiment",
-    color: "#FBBF24",
+      "Plug-and-play automation templates built for real business tasks — from content pipelines to CRM updates.",
+    bg: "rgba(168,255,62,0.04)",
+    border: "rgba(168,255,62,0.1)",
+    accent: "#A8FF3E",
   },
 ];
 
 export function Products() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
-    <section id="products" className="py-28 px-4 sm:px-6 bg-[var(--background)]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+    <section id="products" className="py-32 px-6">
+      <div className="max-w-5xl mx-auto">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-xs tracking-[0.2em] uppercase text-[var(--foreground)]/30 mb-20 text-center"
         >
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#A8FF3E] mb-3 block">
-            Products
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-            Tools built for real work.
-          </h2>
-          <p className="text-[var(--foreground)]/50 max-w-xl mx-auto">
-            From digital assets to AI-powered Chrome extensions — everything Flare ships
-            solves a real problem.
-          </p>
-        </motion.div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {products.map((product, i) => (
-            <motion.div
-              key={product.name}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="glass rounded-2xl p-6 card-hover group flex flex-col"
-            >
-              <div className="flex items-start justify-between mb-5">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{ background: `${product.color}18` }}
-                >
-                  <div style={{ color: product.color }}>{product.icon}</div>
-                </div>
-                <span
-                  className={`inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-1 rounded-full border ${statusStyles[product.status]}`}
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full ${statusDot[product.status]}`} />
-                  {product.status}
-                </span>
-              </div>
-
-              <h3 className="font-bold text-base text-[var(--foreground)] mb-1">
-                {product.name}
-              </h3>
-              <p className="text-xs text-[#A8FF3E] font-medium mb-3">{product.tagline}</p>
-              <p className="text-sm text-[var(--foreground)]/50 leading-relaxed flex-1">
-                {product.description}
-              </p>
-
-              {product.link && (
-                <a
-                  href={product.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-[var(--foreground)]/40 hover:text-[#A8FF3E] transition-colors"
-                >
-                  View <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-            </motion.div>
+          What we build
+        </motion.p>
+        <div className="flex flex-col gap-4">
+          {products.map((p, i) => (
+            <ProductCard key={p.name} product={p} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProductCard({
+  product,
+  index,
+}: {
+  product: (typeof products)[0];
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.95", "start 0.3"],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const x = useTransform(scrollYProgress, [0, 0.5], [index % 2 === 0 ? -50 : 50, 0]);
+
+  return (
+    <motion.div ref={ref} style={{ opacity, x }}>
+      <div
+        className="group rounded-2xl p-8 sm:p-12 transition-all duration-500 hover:scale-[1.01]"
+        style={{ background: product.bg, border: `1px solid ${product.border}` }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1">
+            <span
+              className="text-[11px] font-semibold tracking-widest uppercase mb-5 block"
+              style={{ color: product.labelColor }}
+            >
+              {product.label}
+            </span>
+            <h3
+              className="text-3xl sm:text-5xl font-bold mb-3 text-[var(--foreground)]"
+              style={{ fontFamily: "var(--font-poppins)" }}
+            >
+              {product.name}
+            </h3>
+            <p className="text-base sm:text-lg font-medium mb-4" style={{ color: product.accent }}>
+              {product.tagline}
+            </p>
+            <p className="text-sm text-[var(--foreground)]/40 leading-relaxed max-w-lg">
+              {product.description}
+            </p>
+          </div>
+          <ArrowUpRight
+            className="w-6 h-6 opacity-10 group-hover:opacity-50 transition-opacity mt-1 flex-shrink-0"
+            style={{ color: product.accent }}
+          />
+        </div>
+      </div>
+    </motion.div>
   );
 }
