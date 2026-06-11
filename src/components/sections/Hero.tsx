@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -117,7 +118,7 @@ export function Hero() {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 mb-8"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#A8FF3E] node-pulse" />
+          <Image src="/logo-spark.png" alt="" width={14} height={14} className="opacity-90" />
           <span className="text-xs text-[var(--foreground)]/60 font-medium">
             Unlocking confidence and possibility through technology
           </span>

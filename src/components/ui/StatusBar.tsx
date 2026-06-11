@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import Image from "next/image";
 
 const projects = [
   "Flare Knowledge Vault",
@@ -33,7 +33,7 @@ export function StatusBar() {
         >
           {[...projects, ...projects].map((p, i) => (
             <span key={i} className="text-xs text-[var(--foreground)]/60 flex items-center gap-1.5">
-              <Zap className="w-3 h-3 text-[#A8FF3E]" />
+              <Image src="/logo-spark.png" alt="" width={12} height={12} className="opacity-80" />
               {p}
             </span>
           ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap } from "lucide-react";
+import Image from "next/image";
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -24,8 +24,8 @@ export function Footer() {
             onClick={() => scrollTo("home")}
             className="flex items-center gap-2"
           >
-            <div className="w-7 h-7 rounded-md bg-[#A8FF3E] flex items-center justify-center">
-              <Zap className="w-3.5 h-3.5 text-[#121824]" strokeWidth={2.5} />
+            <div className="w-7 h-7 rounded-md overflow-hidden flex-shrink-0">
+              <Image src="/logo-fd.png" alt="Flare Digital" width={28} height={28} className="w-full h-full object-cover" />
             </div>
             <span className="font-bold text-[var(--foreground)]" style={{ fontFamily: "var(--font-poppins)" }}>Flare Digital</span>
           </button>

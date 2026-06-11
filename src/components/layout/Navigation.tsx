@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Menu, X, Zap, Command } from "lucide-react";
+import { Sun, Moon, Menu, X, Command } from "lucide-react";
+import Image from "next/image";
 import { useTheme } from "@/components/providers/ThemeProvider";
 import { useCommandPalette } from "@/components/ui/CommandPalette";
 
@@ -52,8 +53,15 @@ export function Navigation() {
             onClick={() => handleNav("#home")}
             className="flex items-center gap-2 group"
           >
-            <div className="w-8 h-8 rounded-lg bg-[#A8FF3E] flex items-center justify-center node-pulse">
-              <Zap className="w-4 h-4 text-[#121824]" strokeWidth={2.5} />
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+              <Image
+                src="/logo-fd.png"
+                alt="Flare Digital"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+                priority
+              />
             </div>
             <span className="font-bold text-lg tracking-tight text-[var(--foreground)]" style={{ fontFamily: "var(--font-poppins)" }}>
               Flare Digital

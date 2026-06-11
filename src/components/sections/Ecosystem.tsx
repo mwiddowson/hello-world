@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Brain, Workflow, TrendingUp, Package, FlaskConical } from "lucide-react";
+import Image from "next/image";
 
 const nodes = [
   {
@@ -116,8 +117,8 @@ export function Ecosystem() {
               className="absolute node-pulse"
               style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
             >
-              <div className="w-12 h-12 rounded-full bg-[#A8FF3E] flex items-center justify-center shadow-lg shadow-orange-500/30">
-                <span className="text-white font-bold text-sm">F</span>
+              <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg shadow-lime-400/20 node-pulse">
+                <Image src="/logo-fd.png" alt="Flare Digital" width={48} height={48} className="w-full h-full object-cover" />
               </div>
             </div>
 
