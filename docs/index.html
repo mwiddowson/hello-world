@@ -3,29 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Year Progress Wallpaper</title>
+  <title>Progress Wallpapers</title>
   <style>
     body {
-      background: #111;
-      color: #888;
+      background: #121824;
+      color: #00C4B3;
       font-family: -apple-system, sans-serif;
       text-align: center;
       padding: 2rem;
       margin: 0;
     }
+    .grid { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+    .card { flex: 0 0 auto; }
     img {
-      max-width: 375px;
+      max-width: 300px;
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.6);
     }
-    p { margin-top: 1rem; font-size: 0.9rem; }
-    a { color: #aaa; }
+    h3 { color: #A8FF3E; margin: 0.5rem 0 0.25rem; font-size: 0.85rem; letter-spacing: 0.1em; }
+    p { margin-top: 0.5rem; font-size: 0.8rem; color: #555; }
+    a { color: #00C4B3; }
   </style>
 </head>
 <body>
-  <img src="background.png" alt="Year progress wallpaper">
-  <p>Updates daily at 00:05 UTC via GitHub Actions.</p>
-  <p><a href="background.png">Direct image link</a> — use this URL in your iOS Shortcut.</p>
+  <div class="grid">
+    <div class="card">
+      <img src="background.png" alt="Year progress — lock screen">
+      <h3>LOCK SCREEN · YEAR</h3>
+      <p><a href="background.png">background.png</a></p>
+    </div>
+    <div class="card">
+      <img src="home.png" alt="Month progress — home screen">
+      <h3>HOME SCREEN · MONTH</h3>
+      <p><a href="home.png">home.png</a></p>
+    </div>
+  </div>
+  <p style="margin-top:2rem;">Updates daily at 00:05 UTC via GitHub Actions.</p>
 </body>
 </html>
