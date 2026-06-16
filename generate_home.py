@@ -22,10 +22,10 @@ DOT_SPACING = 114    # center-to-center → 26px gap between dot edges
 # grid_w = 6 × 114 = 684px → origin_x = (1206 − 684) // 2 = 261px
 
 # ── Typography ────────────────────────────────────────────────────────────────
-FONT_SIZE_MONTH = 80   # "JUNE 2026" header above grid
+FONT_SIZE_MONTH = 60   # "JUNE 2026" header above grid
 FONT_SIZE_STATS = 60   # "14d left  ·  53%" label below grid
-HEADER_GAP      = 56   # px: month text baseline → first dot row centre
-TEXT_GAP        = 64   # px: last dot row centre → stats text baseline
+HEADER_GAP      = 36   # px: month text baseline → first dot row centre
+TEXT_GAP        = 44   # px: last dot row centre → stats text baseline
 
 # ── Home-screen safe zones ────────────────────────────────────────────────────
 # TOP:    status bar only (no lock-screen clock) — 59pt × 3× = 177px
@@ -70,10 +70,8 @@ def generate_image(output_path=OUTPUT_PATH):
     grid_w = (GRID_COLS - 1) * DOT_SPACING   # always 684px
     grid_h = (rows - 1)      * DOT_SPACING   # 456px (5 rows) or 342px (4 rows, Feb)
 
-    # Vertically centre the full content block (header + grid + stats) in the safe zone
-    total_block_h = FONT_SIZE_MONTH + HEADER_GAP + grid_h + TEXT_GAP + FONT_SIZE_STATS
-    safe_h        = HOME_SAFE_BOTTOM - HOME_SAFE_TOP
-    block_top     = HOME_SAFE_TOP + (safe_h - total_block_h) // 2
+    # Pin content block to top of icon area (below status bar only)
+    block_top = HOME_SAFE_TOP + 20
 
     header_y  = block_top
     origin_y  = block_top + FONT_SIZE_MONTH + HEADER_GAP
