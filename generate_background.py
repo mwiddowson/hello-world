@@ -23,13 +23,12 @@ DOT_SPACING = 52    # center-to-center, horizontal and vertical
 FONT_SIZE = 52
 TEXT_GAP  = 72      # px between bottom of last dot row and text baseline
 
-# ── iPhone lock-screen safe zones ─────────────────────────────────────────────
-# TOP clears: Dynamic Island + status bar + date label + large clock digits
-# BOTTOM clears: torch/camera shortcut buttons + home-indicator gesture bar
-# At 3× scale (402×874 logical pts) the clock ends ~320 logical pts ≈ 960 px;
-# 38% of 2622 ≈ 996 px gives a clean margin.
-TOP_SAFE_FRAC    = 0.38   # 38% of canvas height from top
-BOTTOM_SAFE_FRAC = 0.11   # 11% of canvas height from bottom
+# ── Grid position ─────────────────────────────────────────────────────────────
+# GRID_TOP_FRAC: fraction of canvas height where the first dot row starts.
+# Increase to add more space below the clock; decrease to move the grid up.
+# At 3× scale the lock-screen clock ends ~37% from the top, so 0.37 sits the
+# grid right beneath it with minimal gap.
+GRID_TOP_FRAC = 0.30
 
 # ── Font search paths (tried in order) ────────────────────────────────────────
 FONT_PATHS = [
@@ -69,18 +68,8 @@ def generate_image(output_path=OUTPUT_PATH):
     grid_w = (GRID_COLS - 1) * DOT_SPACING
     grid_h = (rows - 1) * DOT_SPACING
 
-    # Safe zone boundaries
-    top_safe    = int(CANVAS_HEIGHT * TOP_SAFE_FRAC)
-    bottom_safe = int(CANVAS_HEIGHT * BOTTOM_SAFE_FRAC)
-    usable_h    = CANVAS_HEIGHT - top_safe - bottom_safe
-
-    # Vertically centre the (grid + gap + text) block inside the safe zone
-    content_h = grid_h + TEXT_GAP + FONT_SIZE
-    extra     = max(0, usable_h - content_h)
-    origin_y  = top_safe + extra // 2
-
-    # Horizontally centre the grid (auto-margin exceeds 90 px each side)
-    origin_x  = (CANVAS_WIDTH - grid_w) // 2
+    origin_y = int(CANVAS_HEIGHT * GRID_TOP_FRAC)
+    origin_x = (CANVAS_WIDTH - grid_w) // 2
 
     img  = Image.new("RGB", (CANVAS_WIDTH, CANVAS_HEIGHT), BG_COLOR)
     draw = ImageDraw.Draw(img)
@@ -115,12 +104,7 @@ def generate_image(output_path=OUTPUT_PATH):
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     img.save(output_path, "PNG")
-    print(
-        f"Saved {output_path}  "
-        f"[day {day_of_year + 1}/{days_in_year}, {days_remaining}d left, {pct}%]  "
-        f"grid_y={origin_y}–{origin_y + grid_h}  text_y={text_y}  "
-        f"bottom_safe_starts={CANVAS_HEIGHT - bottom_safe}"
-    )
+    print(f"Saved {output_path}  [day {day_of_year + 1}/{days_in_year}, {days_remaining}d left, {pct}%]  grid_y={origin_y}–{origin_y + grid_h}  text_y={text_y}")
 
 
 if __name__ == "__main__":
