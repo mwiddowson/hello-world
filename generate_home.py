@@ -16,16 +16,16 @@ DOT_FUTURE  = (50, 65, 88)      # dark blue-gray   (charcoal palette)
 TEXT_COLOR  = (0, 196, 179)     # Vibrant Teal     #00C4B3
 
 # ── Grid geometry (large dots — ~30 dots vs 365 in the yearly version) ────────
-GRID_COLS   = 7      # one column per day of the week
-DOT_RADIUS  = 44     # px
-DOT_SPACING = 114    # center-to-center → 26px gap between dot edges
-# grid_w = 6 × 114 = 684px → origin_x = (1206 − 684) // 2 = 261px
+GRID_COLS   = 8      # wider, flatter grid — always 4 rows, no orphan dot row
+DOT_RADIUS  = 32     # px
+DOT_SPACING = 110    # center-to-center → 46px gap between dot edges
+# grid_w = 7 × 110 = 770px → origin_x = (1206 − 770) // 2 = 218px
 
 # ── Typography ────────────────────────────────────────────────────────────────
 FONT_SIZE_MONTH = 60   # "JUNE 2026" header above grid
 FONT_SIZE_STATS = 60   # "14d left  ·  53%" label below grid
-HEADER_GAP      = 36   # px: month text baseline → first dot row centre
-TEXT_GAP        = 44   # px: last dot row centre → stats text baseline
+HEADER_GAP      = 44   # px: month text baseline → first dot row centre
+TEXT_GAP        = 50   # px: last dot row centre → stats text baseline
 
 # ── Home-screen safe zones ────────────────────────────────────────────────────
 # TOP:    status bar only (no lock-screen clock) — 59pt × 3× = 177px
