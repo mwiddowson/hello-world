@@ -22,10 +22,9 @@ DOT_SPACING = 110    # center-to-center → 46px gap between dot edges
 # grid_w = 7 × 110 = 770px → origin_x = (1206 − 770) // 2 = 218px
 
 # ── Typography ────────────────────────────────────────────────────────────────
-FONT_SIZE_MONTH = 60   # "JUNE 2026" header above grid
 FONT_SIZE_STATS = 60   # "14d left  ·  53%" label below grid
-HEADER_GAP      = 44   # px: month text baseline → first dot row centre
 TEXT_GAP        = 50   # px: last dot row centre → stats text baseline
+TOP_PADDING     = 40   # px: status bar → first dot row edge
 
 # ── Home-screen safe zones ────────────────────────────────────────────────────
 # TOP:    status bar only (no lock-screen clock) — 59pt × 3× = 177px
@@ -70,22 +69,12 @@ def generate_image(output_path=OUTPUT_PATH):
     grid_w = (GRID_COLS - 1) * DOT_SPACING   # always 684px
     grid_h = (rows - 1)      * DOT_SPACING   # 456px (5 rows) or 342px (4 rows, Feb)
 
-    # Pin content block to top of icon area (below status bar only)
-    block_top = HOME_SAFE_TOP + 20
-
-    header_y  = block_top
-    origin_y  = block_top + FONT_SIZE_MONTH + HEADER_GAP
-    origin_x  = (CANVAS_WIDTH - grid_w) // 2   # = 261px
-    stats_y   = origin_y + grid_h + TEXT_GAP
+    origin_y = HOME_SAFE_TOP + TOP_PADDING + DOT_RADIUS
+    origin_x = (CANVAS_WIDTH - grid_w) // 2   # = 261px
+    stats_y  = origin_y + grid_h + TEXT_GAP
 
     img  = Image.new("RGB", (CANVAS_WIDTH, CANVAS_HEIGHT), BG_COLOR)
     draw = ImageDraw.Draw(img)
-
-    # Month name header
-    font_month = load_font(FONT_SIZE_MONTH)
-    bbox       = draw.textbbox((0, 0), month_label, font=font_month)
-    header_x   = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
-    draw.text((header_x, header_y), month_label, fill=TEXT_COLOR, font=font_month)
 
     # Dot grid
     for i in range(days_in_month):
