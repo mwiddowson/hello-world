@@ -4,35 +4,32 @@ import math
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-# ── Canvas (iPhone 16/17 Pro native resolution) ───────────────────────────────
-CANVAS_WIDTH  = 1206
+from workout_data import draw_workout_tick, load_workout_dates, workout_summary
+
+# Canvas (iPhone 16/17 Pro native resolution)
+CANVAS_WIDTH = 1206
 CANVAS_HEIGHT = 2622
 
-# ── Colors ────────────────────────────────────────────────────────────────────
-BG_COLOR    = (18, 24, 36)      # Deep Charcoal   #121824
-DOT_PAST    = (249, 249, 249)   # Off-White        #F9F9F9
-DOT_TODAY   = (168, 255, 62)    # Bright Lime      #A8FF3E  (the spark)
-DOT_FUTURE  = (50, 65, 88)      # dark blue-gray   (charcoal palette)
-TEXT_COLOR  = (0, 196, 179)     # Vibrant Teal     #00C4B3
+# Colors
+BG_COLOR = (18, 24, 36)
+DOT_PAST = (249, 249, 249)
+DOT_TODAY = (168, 255, 62)
+DOT_FUTURE = (50, 65, 88)
+TEXT_COLOR = (0, 196, 179)
+WORKOUT_TICK = DOT_TODAY
 
-# ── Grid geometry (large dots — ~30 dots vs 365 in the yearly version) ────────
-GRID_COLS   = 8      # wider, flatter grid — always 4 rows, no orphan dot row
-DOT_RADIUS  = 32     # px
-DOT_SPACING = 110    # center-to-center → 46px gap between dot edges
-# grid_w = 7 × 110 = 770px → origin_x = (1206 − 770) // 2 = 218px
+# Grid geometry
+GRID_COLS = 8
+DOT_RADIUS = 32
+DOT_SPACING = 110
 
-# ── Typography ────────────────────────────────────────────────────────────────
-FONT_SIZE_STATS = 60   # "14d left  ·  53%" label below grid
-TEXT_GAP        = 50   # px: last dot row centre → stats text baseline
-TOP_PADDING     = 40   # px: status bar → first dot row edge
+# Typography and safe zones
+FONT_SIZE_STATS = 60
+TEXT_GAP = 50
+TOP_PADDING = 40
+HOME_SAFE_TOP = 177
+HOME_SAFE_BOTTOM = CANVAS_HEIGHT - 380
 
-# ── Home-screen safe zones ────────────────────────────────────────────────────
-# TOP:    status bar only (no lock-screen clock) — 59pt × 3× = 177px
-# BOTTOM: dock + home indicator — ~380px from bottom
-HOME_SAFE_TOP    = 177
-HOME_SAFE_BOTTOM = CANVAS_HEIGHT - 380   # = 2242px
-
-# ── Font search paths (tried in order) ────────────────────────────────────────
 FONT_PATHS = [
     "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     "/usr/share/fonts/dejavu/DejaVuSans.ttf",
@@ -43,13 +40,13 @@ FONT_PATHS = [
 OUTPUT_PATH = "docs/home.png"
 
 
-def get_month_progress():
-    today          = datetime.date.today()
-    days_in_month  = calendar.monthrange(today.year, today.month)[1]
-    day_of_month   = today.day                       # 1-indexed
-    days_remaining = days_in_month - day_of_month   # excludes today
-    pct            = int(day_of_month / days_in_month * 100)
-    month_label    = today.strftime("%B %Y").upper()  # "JUNE 2026"
+def get_month_progress(today=None):
+    today = today or datetime.date.today()
+    days_in_month = calendar.monthrange(today.year, today.month)[1]
+    day_of_month = today.day
+    days_remaining = days_in_month - day_of_month
+    pct = int(day_of_month / days_in_month * 100)
+    month_label = today.strftime("%B %Y").upper()
     return today, days_in_month, day_of_month, days_remaining, pct, month_label
 
 
@@ -62,53 +59,55 @@ def load_font(size):
     return ImageFont.load_default()
 
 
-def generate_image(output_path=OUTPUT_PATH):
-    _, days_in_month, day_of_month, days_remaining, pct, month_label = get_month_progress()
+def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
+    today, days_in_month, day_of_month, days_remaining, pct, month_label = get_month_progress(today)
+    workout_dates = workout_dates if workout_dates is not None else load_workout_dates()
+    _, month_workouts, _ = workout_summary(today, workout_dates)
 
-    rows   = math.ceil(days_in_month / GRID_COLS)
-    grid_w = (GRID_COLS - 1) * DOT_SPACING   # always 684px
-    grid_h = (rows - 1)      * DOT_SPACING   # 456px (5 rows) or 342px (4 rows, Feb)
-
+    rows = math.ceil(days_in_month / GRID_COLS)
+    grid_w = (GRID_COLS - 1) * DOT_SPACING
+    grid_h = (rows - 1) * DOT_SPACING
     origin_y = HOME_SAFE_TOP + TOP_PADDING + DOT_RADIUS
-    origin_x = (CANVAS_WIDTH - grid_w) // 2   # = 261px
-    stats_y  = origin_y + grid_h + TEXT_GAP
+    origin_x = (CANVAS_WIDTH - grid_w) // 2
+    stats_y = origin_y + grid_h + TEXT_GAP
 
-    img  = Image.new("RGB", (CANVAS_WIDTH, CANVAS_HEIGHT), BG_COLOR)
+    img = Image.new("RGB", (CANVAS_WIDTH, CANVAS_HEIGHT), BG_COLOR)
     draw = ImageDraw.Draw(img)
 
-    # Dot grid
     for i in range(days_in_month):
+        date = datetime.date(today.year, today.month, i + 1)
         col = i % GRID_COLS
         row = i // GRID_COLS
-        cx  = origin_x + col * DOT_SPACING
-        cy  = origin_y + row * DOT_SPACING
+        cx = origin_x + col * DOT_SPACING
+        cy = origin_y + row * DOT_SPACING
 
-        if i < day_of_month - 1:       # days before today
+        if i < day_of_month - 1:
             color = DOT_PAST
-        elif i == day_of_month - 1:    # today (convert 1-indexed to 0-indexed)
+        elif i == day_of_month - 1:
             color = DOT_TODAY
-        else:                          # remaining days
+        else:
             color = DOT_FUTURE
 
         draw.ellipse(
-            [cx - DOT_RADIUS, cy - DOT_RADIUS,
-             cx + DOT_RADIUS, cy + DOT_RADIUS],
+            [cx - DOT_RADIUS, cy - DOT_RADIUS, cx + DOT_RADIUS, cy + DOT_RADIUS],
             fill=color,
         )
+        if date in month_workouts:
+            draw_workout_tick(
+                draw, cx, cy, DOT_RADIUS, WORKOUT_TICK, BG_COLOR
+            )
 
-    # Stats label
     stats_label = f"{days_remaining}d left  ·  {pct}%"
-    font_stats  = load_font(FONT_SIZE_STATS)
-    bbox        = draw.textbbox((0, 0), stats_label, font=font_stats)
-    stats_x     = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
+    font_stats = load_font(FONT_SIZE_STATS)
+    bbox = draw.textbbox((0, 0), stats_label, font=font_stats)
+    stats_x = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
     draw.text((stats_x, stats_y), stats_label, fill=TEXT_COLOR, font=font_stats)
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     img.save(output_path, "PNG")
     print(
         f"Saved {output_path}  [{month_label}, day {day_of_month}/{days_in_month}, "
-        f"{days_remaining}d left, {pct}%]  "
-        f"grid_y={origin_y}–{origin_y + grid_h}  stats_y={stats_y}"
+        f"{len(month_workouts)} workouts]"
     )
 
 
