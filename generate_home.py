@@ -10,6 +10,9 @@ from workout_data import load_workout_dates, workout_summary
 CANVAS_WIDTH = 1206
 CANVAS_HEIGHT = 2622
 
+# Render at this multiple, then downsample - Pillow does not antialias shapes.
+SUPERSAMPLE = 4
+
 # Colors
 BG_COLOR = (18, 24, 36)
 DOT_PAST = (249, 249, 249)
@@ -72,15 +75,20 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
     origin_x = (CANVAS_WIDTH - grid_w) // 2
     stats_y = origin_y + grid_h + TEXT_GAP
 
-    img = Image.new("RGB", (CANVAS_WIDTH, CANVAS_HEIGHT), BG_COLOR)
+    # Pillow's ellipse() has no antialiasing, so circles drawn straight to the
+    # final canvas come out visibly stair-stepped. Draw everything oversized and
+    # downsample with LANCZOS instead, which resolves those edges smoothly.
+    s = SUPERSAMPLE
+    radius = DOT_RADIUS * s
+    img = Image.new("RGB", (CANVAS_WIDTH * s, CANVAS_HEIGHT * s), BG_COLOR)
     draw = ImageDraw.Draw(img)
 
     for i in range(days_in_month):
         date = datetime.date(today.year, today.month, i + 1)
         col = i % GRID_COLS
         row = i // GRID_COLS
-        cx = origin_x + col * DOT_SPACING
-        cy = origin_y + row * DOT_SPACING
+        cx = (origin_x + col * DOT_SPACING) * s
+        cy = (origin_y + row * DOT_SPACING) * s
 
         is_workout = date in month_workouts
         if is_workout:
@@ -92,18 +100,19 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
         else:
             color = DOT_FUTURE
 
-        bounds = [cx - DOT_RADIUS, cy - DOT_RADIUS, cx + DOT_RADIUS, cy + DOT_RADIUS]
+        bounds = [cx - radius, cy - radius, cx + radius, cy + radius]
         draw.ellipse(bounds, fill=color)
         # Today must still read as "you are here" on days that were also workouts.
         if i == day_of_month - 1 and is_workout:
-            draw.ellipse(bounds, outline=DOT_TODAY, width=TODAY_RING_WIDTH)
+            draw.ellipse(bounds, outline=DOT_TODAY, width=TODAY_RING_WIDTH * s)
 
     stats_label = f"{days_remaining}d left  ·  {pct}%"
-    font_stats = load_font(FONT_SIZE_STATS)
+    font_stats = load_font(FONT_SIZE_STATS * s)
     bbox = draw.textbbox((0, 0), stats_label, font=font_stats)
-    stats_x = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
-    draw.text((stats_x, stats_y), stats_label, fill=TEXT_COLOR, font=font_stats)
+    stats_x = (CANVAS_WIDTH * s - (bbox[2] - bbox[0])) // 2
+    draw.text((stats_x, stats_y * s), stats_label, fill=TEXT_COLOR, font=font_stats)
 
+    img = img.resize((CANVAS_WIDTH, CANVAS_HEIGHT), Image.LANCZOS)
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     img.save(output_path, "PNG")
     print(
