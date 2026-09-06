@@ -2,8 +2,9 @@ import calendar
 import datetime
 import math
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
+from typography import load_font
 from workout_data import load_workout_dates, workout_summary
 
 # Canvas (iPhone 16/17 Pro native resolution)
@@ -34,13 +35,6 @@ TOP_PADDING = 40
 HOME_SAFE_TOP = 177
 HOME_SAFE_BOTTOM = CANVAS_HEIGHT - 380
 
-FONT_PATHS = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/dejavu/DejaVuSans.ttf",
-    "/System/Library/Fonts/Helvetica.ttc",
-    "/Library/Fonts/Arial.ttf",
-]
-
 OUTPUT_PATH = "docs/home.png"
 
 
@@ -52,15 +46,6 @@ def get_month_progress(today=None):
     pct = int(day_of_month / days_in_month * 100)
     month_label = today.strftime("%B %Y").upper()
     return today, days_in_month, day_of_month, days_remaining, pct, month_label
-
-
-def load_font(size):
-    for path in FONT_PATHS:
-        try:
-            return ImageFont.truetype(path, size)
-        except (OSError, IOError):
-            continue
-    return ImageFont.load_default()
 
 
 def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):

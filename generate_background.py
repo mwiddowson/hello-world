@@ -1,8 +1,9 @@
 import datetime
 import math
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
+from typography import load_font
 from workout_data import load_workout_dates, workout_summary
 
 # Canvas (iPhone 16/17 Pro native resolution)
@@ -32,13 +33,6 @@ TEXT_GAP = 72
 LINE_HEIGHT = 68
 GRID_TOP_FRAC = 0.30
 
-FONT_PATHS = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/dejavu/DejaVuSans.ttf",
-    "/System/Library/Fonts/Helvetica.ttc",
-    "/Library/Fonts/Arial.ttf",
-]
-
 OUTPUT_PATH = "docs/background.png"
 
 
@@ -51,15 +45,6 @@ def get_year_progress(today=None):
     days_remaining = days_in_year - day_of_year - 1
     pct = int((day_of_year + 1) / days_in_year * 100)
     return today, day_of_year, days_in_year, days_remaining, pct
-
-
-def load_font(size):
-    for path in FONT_PATHS:
-        try:
-            return ImageFont.truetype(path, size)
-        except (OSError, IOError):
-            continue
-    return ImageFont.load_default()
 
 
 def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):

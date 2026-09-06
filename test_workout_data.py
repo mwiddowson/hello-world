@@ -7,6 +7,7 @@ from PIL import Image
 
 import generate_background
 import generate_home
+from typography import FONT_WEIGHT, load_font
 from workout_data import count_weeks_off, load_workout_dates, workout_summary
 
 
@@ -41,6 +42,19 @@ class WorkoutDataTests(unittest.TestCase):
         with_one = count_weeks_off(today, {datetime.date(2026, 1, 20)})
         self.assertEqual(empty, 4)
         self.assertEqual(with_one, 3)
+
+    def test_bundled_inter_font_is_used(self):
+        # A missing or unreadable font file falls back to a system sans, which
+        # would silently undo the Apple-style typography. Catch that here.
+        family, _ = load_font(48).getname()
+        self.assertIn("Inter", family)
+
+    def test_font_weight_axis_is_applied(self):
+        # Setting the variation axes is best-effort, so confirm it actually took:
+        # semibold must render wider than thin at the same size.
+        wide = load_font(96, weight=FONT_WEIGHT).getlength("6 weeks off")
+        thin = load_font(96, weight=100).getlength("6 weeks off")
+        self.assertGreater(wide, thin)
 
     def test_generators_render_native_size_images(self):
         with tempfile.TemporaryDirectory() as directory:
