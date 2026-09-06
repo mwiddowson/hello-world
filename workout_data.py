@@ -30,8 +30,29 @@ def load_workout_dates(path=WORKOUT_DATA_PATH):
     return dates
 
 
+def count_weeks_off(today, workout_dates):
+    """Count completed Mon-Sun weeks this year that contain no workout.
+
+    Weeks are matched by date containment rather than ISO week numbers, which
+    would assign turn-of-year days to the neighbouring ISO year. The week
+    currently in progress is excluded — it can still earn a workout.
+    """
+    completed = {date for date in workout_dates if date <= today}
+    jan_first = datetime.date(today.year, 1, 1)
+    monday = jan_first - datetime.timedelta(days=jan_first.weekday())
+    current_monday = today - datetime.timedelta(days=today.weekday())
+
+    weeks_off = 0
+    while monday < current_monday:
+        sunday = monday + datetime.timedelta(days=6)
+        if not any(monday <= date <= sunday for date in completed):
+            weeks_off += 1
+        monday += datetime.timedelta(days=7)
+    return weeks_off
+
+
 def workout_summary(today, workout_dates):
-    """Return completed workout dates for today\'s year/month and YTD rate."""
+    """Return completed workout dates for today\'s year/month and weeks off."""
     completed = {date for date in workout_dates if date <= today}
     year_dates = {date for date in completed if date.year == today.year}
     month_dates = {
@@ -39,9 +60,7 @@ def workout_summary(today, workout_dates):
         for date in year_dates
         if date.month == today.month
     }
-    elapsed_days = today.timetuple().tm_yday
-    workout_pct = round(len(year_dates) / elapsed_days * 100) if elapsed_days else 0
-    return year_dates, month_dates, workout_pct
+    return year_dates, month_dates, count_weeks_off(today, workout_dates)
 
 
 def draw_workout_tick(draw, cx, cy, radius, color, outline_color):

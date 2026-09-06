@@ -60,7 +60,7 @@ def load_font(size):
 def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
     today, day_of_year, days_in_year, days_remaining, pct = get_year_progress(today)
     workout_dates = workout_dates if workout_dates is not None else load_workout_dates()
-    year_workouts, _, workout_pct = workout_summary(today, workout_dates)
+    year_workouts, _, weeks_off = workout_summary(today, workout_dates)
 
     rows = math.ceil(days_in_year / GRID_COLS)
     grid_w = (GRID_COLS - 1) * DOT_SPACING
@@ -94,7 +94,8 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
                 draw, cx, cy, DOT_RADIUS, WORKOUT_TICK, BG_COLOR
             )
 
-    label = f"{days_remaining}d left  ·  {pct}%  ·  {workout_pct}% workout days"
+    week_word = "week" if weeks_off == 1 else "weeks"
+    label = f"{days_remaining}d left  ·  {pct}%  ·  {weeks_off} {week_word} off"
     font = load_font(FONT_SIZE)
     bbox = draw.textbbox((0, 0), label, font=font)
     text_x = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
@@ -105,7 +106,7 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
     img.save(output_path, "PNG")
     print(
         f"Saved {output_path}  [day {day_of_year + 1}/{days_in_year}, "
-        f"{len(year_workouts)} workouts, {workout_pct}% workout days]"
+        f"{len(year_workouts)} workouts, {weeks_off} {week_word} off]"
     )
 
 
