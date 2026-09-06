@@ -3,7 +3,7 @@ import math
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-from workout_data import draw_workout_tick, load_workout_dates, workout_summary
+from workout_data import load_workout_dates, workout_summary
 
 # Canvas (iPhone 16/17 Pro native resolution)
 CANVAS_WIDTH = 1206
@@ -15,12 +15,13 @@ DOT_PAST = (249, 249, 249)
 DOT_TODAY = (168, 255, 62)
 DOT_FUTURE = (50, 65, 88)
 TEXT_COLOR = (0, 196, 179)
-WORKOUT_TICK = DOT_TODAY
+DOT_WORKOUT = (255, 122, 26)  # Vivid Orange - workout days
 
 # Grid geometry
 GRID_COLS = 20
 DOT_RADIUS = 18
 DOT_SPACING = 52
+TODAY_RING_WIDTH = 5
 
 # Text
 FONT_SIZE = 48
@@ -79,21 +80,21 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
         cx = origin_x + col * DOT_SPACING
         cy = origin_y + row * DOT_SPACING
 
-        if i < day_of_year:
+        is_workout = date in year_workouts
+        if is_workout:
+            color = DOT_WORKOUT
+        elif i < day_of_year:
             color = DOT_PAST
         elif i == day_of_year:
             color = DOT_TODAY
         else:
             color = DOT_FUTURE
 
-        draw.ellipse(
-            [cx - DOT_RADIUS, cy - DOT_RADIUS, cx + DOT_RADIUS, cy + DOT_RADIUS],
-            fill=color,
-        )
-        if date in year_workouts:
-            draw_workout_tick(
-                draw, cx, cy, DOT_RADIUS, WORKOUT_TICK, BG_COLOR
-            )
+        bounds = [cx - DOT_RADIUS, cy - DOT_RADIUS, cx + DOT_RADIUS, cy + DOT_RADIUS]
+        draw.ellipse(bounds, fill=color)
+        # Today must still read as "you are here" on days that were also workouts.
+        if i == day_of_year and is_workout:
+            draw.ellipse(bounds, outline=DOT_TODAY, width=TODAY_RING_WIDTH)
 
     week_word = "week" if weeks_off == 1 else "weeks"
     lines = [

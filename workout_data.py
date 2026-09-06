@@ -61,15 +61,3 @@ def workout_summary(today, workout_dates):
         if date.month == today.month
     }
     return year_dates, month_dates, count_weeks_off(today, workout_dates)
-
-
-def draw_workout_tick(draw, cx, cy, radius, color, outline_color):
-    """Draw a compact, legible check mark centred on a progress dot."""
-    points = [
-        (cx - int(radius * 0.52), cy),
-        (cx - int(radius * 0.12), cy + int(radius * 0.42)),
-        (cx + int(radius * 0.60), cy - int(radius * 0.42)),
-    ]
-    width = max(3, radius // 4)
-    draw.line(points, fill=outline_color, width=width + 4, joint="curve")
-    draw.line(points, fill=color, width=width, joint="curve")
