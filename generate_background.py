@@ -25,6 +25,7 @@ DOT_SPACING = 52
 # Text
 FONT_SIZE = 48
 TEXT_GAP = 72
+LINE_HEIGHT = 68
 GRID_TOP_FRAC = 0.30
 
 FONT_PATHS = [
@@ -95,12 +96,17 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
             )
 
     week_word = "week" if weeks_off == 1 else "weeks"
-    label = f"{days_remaining}d left  ·  {pct}%  ·  {weeks_off} {week_word} off"
+    lines = [
+        f"{days_remaining}d left  ·  {pct}%",
+        f"{weeks_off} {week_word} off",
+    ]
     font = load_font(FONT_SIZE)
-    bbox = draw.textbbox((0, 0), label, font=font)
-    text_x = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
     text_y = origin_y + grid_h + TEXT_GAP
-    draw.text((text_x, text_y), label, fill=TEXT_COLOR, font=font)
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        text_x = (CANVAS_WIDTH - (bbox[2] - bbox[0])) // 2
+        draw.text((text_x, text_y), line, fill=TEXT_COLOR, font=font)
+        text_y += LINE_HEIGHT
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     img.save(output_path, "PNG")
