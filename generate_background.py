@@ -27,10 +27,11 @@ DOT_RADIUS = 18
 DOT_SPACING = 52
 TODAY_RING_WIDTH = 5
 
-# Text
-FONT_SIZE = 48
+# Text. FONT_SIZE 66 puts Inter's cap height at 48px, matching the "Sun 6 Sep"
+# date line iOS draws above this on the lock screen (measured off a screenshot).
+FONT_SIZE = 66
 TEXT_GAP = 72
-LINE_HEIGHT = 68
+LINE_HEIGHT = round(FONT_SIZE * 1.42)
 GRID_TOP_FRAC = 0.30
 
 OUTPUT_PATH = "docs/background.png"
@@ -91,7 +92,7 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
 
     week_word = "week" if weeks_off == 1 else "weeks"
     lines = [
-        f"{days_remaining}d left  ·  {pct}%",
+        f"{days_remaining}d left · {pct}%",
         f"{weeks_off} {week_word} off",
     ]
     font = load_font(FONT_SIZE * s)

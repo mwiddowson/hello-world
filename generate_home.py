@@ -91,7 +91,7 @@ def generate_image(output_path=OUTPUT_PATH, today=None, workout_dates=None):
         if i == day_of_month - 1 and is_workout:
             draw.ellipse(bounds, outline=DOT_TODAY, width=TODAY_RING_WIDTH * s)
 
-    stats_label = f"{days_remaining}d left  ·  {pct}%"
+    stats_label = f"{days_remaining}d left · {pct}%"
     font_stats = load_font(FONT_SIZE_STATS * s)
     bbox = draw.textbbox((0, 0), stats_label, font=font_stats)
     stats_x = (CANVAS_WIDTH * s - (bbox[2] - bbox[0])) // 2
