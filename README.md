@@ -24,9 +24,17 @@ font install step and renders identically locally and in CI.
 
 ## Add a workout
 
-Add the date once to `workout_dates.csv` using `YYYY/MM/DD`. Multiple exercises on
-the same date still count as one workout day. The daily workflow de-duplicates dates
-and ignores future dates.
+```bash
+python log_workout.py            # today
+python log_workout.py 2026/11/20 # a specific day
+```
+
+Then regenerate the images and push. In a Claude session on this repo, `/log-workout`
+does all of that in one step — plain English ("went to the gym yesterday") works too.
+
+The script keeps `workout_dates.csv` sorted and unique, so a back-filled date lands in
+order, re-running a logged date is a no-op, and a malformed or future date is refused.
+Multiple exercises on the same date still count as one workout day.
 
 Run locally with:
 

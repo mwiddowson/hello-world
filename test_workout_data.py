@@ -7,8 +7,50 @@ from PIL import Image
 
 import generate_background
 import generate_home
+from log_workout import log_workout
 from typography import FONT_WEIGHT, load_font
 from workout_data import count_weeks_off, load_workout_dates, workout_summary
+
+
+class LogWorkoutTests(unittest.TestCase):
+    def setUp(self):
+        self.today = datetime.date(2026, 11, 21)
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.path = Path(self.directory.name) / "workout_dates.csv"
+        self.path.write_text("date\n2026/11/10\n2026/11/17\n", encoding="utf-8")
+
+    def test_new_date_is_added(self):
+        date, added = log_workout("2026/11/20", self.path, self.today)
+        self.assertEqual(date, datetime.date(2026, 11, 20))
+        self.assertTrue(added)
+        self.assertIn(datetime.date(2026, 11, 20), load_workout_dates(self.path))
+
+    def test_file_stays_sorted_when_back_filling(self):
+        # 11/12 belongs before the two dates already in the file.
+        log_workout("2026/11/12", self.path, self.today)
+        rows = self.path.read_text(encoding="utf-8").splitlines()
+        self.assertEqual(rows, ["date", "2026/11/10", "2026/11/12", "2026/11/17"])
+
+    def test_duplicate_is_a_no_op(self):
+        before = self.path.read_text(encoding="utf-8")
+        date, added = log_workout("2026/11/17", self.path, self.today)
+        self.assertFalse(added)
+        self.assertEqual(self.path.read_text(encoding="utf-8"), before)
+
+    def test_no_argument_logs_today(self):
+        date, added = log_workout(None, self.path, self.today)
+        self.assertEqual(date, self.today)
+        self.assertTrue(added)
+
+    def test_malformed_date_is_rejected(self):
+        for bad in ("20/11/2026", "2026-11-20", "yesterday", "2026/13/01"):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                log_workout(bad, self.path, self.today)
+
+    def test_future_date_is_rejected(self):
+        with self.assertRaises(ValueError):
+            log_workout("2026/11/22", self.path, self.today)
 
 
 class WorkoutDataTests(unittest.TestCase):
